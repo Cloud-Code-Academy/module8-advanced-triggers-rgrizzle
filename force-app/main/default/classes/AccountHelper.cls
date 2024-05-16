@@ -28,19 +28,43 @@ Always ensure that your helper methods are bulk-safe to handle multiple records 
 */
 public with sharing class AccountHelper {
     
-    public void setTypeProspect(SObject objects){
+    public static void setTypeProspect(List<Account> accs){
+        for (Account a : accs) {
+            if (a.Type == null) {
+                a.Type = 'Prospect';
+            }
+        }
 
     }
 
-    void addressCopy(){
-
+    public static void addressCopy(List<Account> accs){
+        for (Account a : accs) {
+            a.BillingStreet = a.ShippingStreet;
+            a.BillingCity = a.ShippingCity;
+            a.BillingState = a.ShippingState;
+            a.BillingPostalCode = a.ShippingPostalCode;
+            a.BillingCountry = a.ShippingCountry;
+        }
     }
 
-    //[public | private ] [static] data_type setRating (input parameters) {
-    //  The body of the method
-    //}
+    public static void setRating (List<Account> accs) {
+        for (Account a : accs) {
+            if (a.phone != null && a.Website != null && a.Fax != null) {
+               a.Rating = 'Hot';
+            }
+        }
+    }
 
-    //[public | private ] [static] data_type defaultContact (input parameters) {
-    //  The body of the method
-    //}
+    public static void defaultContact (List<Account> accs) {
+        List<Contact> contacts = new List<Contact>();   
+        for(Account acc : accs){
+            Contact con = new Contact();
+            con.LastName = 'DefaultContact';
+            con.Email = 'default@email.com';
+            con.AccountId = acc.Id;
+            contacts.add(con);
+        }
+        insert contacts; 
+
+    }
 }
