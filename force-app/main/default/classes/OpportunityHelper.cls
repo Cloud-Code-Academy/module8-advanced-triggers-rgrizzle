@@ -21,9 +21,8 @@ public with sharing class OpportunityHelper {
         newOpp.addError('Cannot delete closed opportunity');
     }
 
-  /* System.debug('Opps::: '+ opps);
+  
    if (opps == null) {
-    System.debug('The provided list of Opportunities is null.');
     return;
    }
 
@@ -33,7 +32,6 @@ public with sharing class OpportunityHelper {
 
 
     for (Opportunity o : oppMap.values()) {
-        System.debug('o.Account.Industry::: ' + o.Account.Industry);
         if (o.Account != null && o.Account.Industry == 'Banking') {
             bankingAccountIds.add(o.AccountId);
         }
@@ -48,12 +46,11 @@ public with sharing class OpportunityHelper {
                                        AND Id IN :closedWonOppIds];
 
     // Step 3: Set error messages for invalid opportunities
-    System.debug('Invalid Opps::: ' + invalidOpps);
     for (Opportunity o : invalidOpps) {
         System.debug(o.Id);
-        Opportunity opp = new Opportunity(Id = o.Id); // Need a new instance to add error
+        Opportunity opp = new Opportunity(Id = o.Id); 
         opp.addError('Cannot delete closed opportunity');
-    }*/
+    }
    } 
    
 
